@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  base:
+    image: node:lts
+    volumes:
+      - ~/.ssh:/root/.ssh
+      - nodemodules:/usr/src/aom/node_modules
+      - .:/usr/src/aom
+    working_dir: /usr/src/aom
+    env_file:
+      - .env
+
+  install:
+    extends:
+      service: base
+    command: yarn install
+    env_file:
+      - .env
+
+  build:
+    extends:
+      service: base
+    command: yarn build
+    env_file:
+      - .env
+
+volumes:
+  nodemodules:
+    external: true

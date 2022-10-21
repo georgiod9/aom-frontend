@@ -1,0 +1,759 @@
+$enable-negative-margins: true;
+$enable-negative-paddings: true;
+
+@import "~bootstrap/scss/bootstrap";
+@import "./base/fonts", "./custom/paddings-and-margins";
+@import 'swiper/css';
+@import "swiper/css/free-mode";
+@import "swiper/css/scrollbar";
+@import "swiper/css/navigation";
+
+html {
+  cursor: url("/assets/cursor.png"), pointer;
+}
+
+h1 {
+  font-size: 3rem;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 1.9rem;
+  }
+}
+
+h4+h4 {
+  padding-top: 2rem;
+}
+
+body {
+  background-color: #000000;
+}
+
+.navbar {
+  background-image: url(/assets/menu-bar.png);
+  background-size: contain;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  // background-repeat-x: repeat;
+  // background-repeat-y: no-repeat;
+
+  button {
+    background: transparent;
+    border: 0;
+  }
+}
+
+.hero-smoke {
+  background-image: url(/assets/hero-background.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.hero {
+  height: 100vh;
+  background-image: url(/assets/hero-header.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  align-items: flex-end;
+
+  @media only screen and (max-width: 600px) {
+    background-image: url(/assets/hero-header-mobile.png);
+  }
+
+  .social-icons {
+    a {
+      padding-right: 2rem;
+
+      @media only screen and (max-width: 600px) {
+        padding-right: 1rem;
+      }
+    }
+  }
+}
+
+.welcome {
+  &.full-height {
+    height: 100vh;
+  }
+
+  h1 {
+    font-family: 'Supersonic Rocketship';
+    color: #D53678;
+    padding: 0;
+    margin: 0;
+
+    &.glory-text {
+      color: #D9FF0C;
+    }
+  }
+
+  h1+h1 {
+    padding-bottom: 10px;
+  }
+
+  h4 {
+    font-family: 'CaviarDreams';
+    color: white;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.who-we-are {
+  .cover-image {
+    height: 110vh;
+    background-image: url(/assets/who-we-are.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+
+    @media only screen and (max-width: 600px) {
+      background-image: url(/assets/who-we-are-mobile.jpg);
+    }
+  }
+
+  .info {
+    margin-top: -20rem;
+
+    h1 {
+      font-family: 'Supersonic Rocketship';
+      color: #F2B612;
+    }
+
+    h4 {
+      font-family: 'CaviarDreams';
+      color: white;
+    }
+  }
+}
+
+.meet-the-mobsters {
+  h1 {
+    font-family: 'Supersonic Rocketship';
+    color: #3675D5;
+  }
+
+  h4 {
+    font-family: 'CaviarDreams';
+    color: white;
+  }
+
+  .description {
+    // margin-top: -6rem;
+    height: 100vh;
+    background-image: url(/assets/meet-the-mobster.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  .rounded {
+    border-radius: 20px !important;
+  }
+}
+
+.mob-challenge {
+  h1 {
+    font-family: 'Supersonic Rocketship';
+    color: #D9FF0C;
+  }
+
+
+  .info-window-text {
+    padding: 0.5rem;
+    margin: 0;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    span {
+      font-size: 14px;
+      line-height: 10px;
+      color: white;
+      text-align: center;
+      flex: 1;
+    }
+
+    &.salute-the-mob {
+      background-color: #3572D0;
+    }
+
+    &.wear-the-mob {
+      background-color: #F1B612;
+    }
+
+    &.post-the-mob {
+      background-color: #D53678;
+    }
+
+    &.spray-the-mob {
+      background-color: #D9FF0C;
+    }
+
+    img {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  .challenge-type {
+    h5 {
+      font-family: 'Supersonic Rocketship';
+      color: white;
+      text-transform: uppercase;
+      padding: 0;
+      margin: 0;
+      padding-left: 1rem;
+    }
+  }
+
+  .map-box div:first-child {
+    position: relative !important;
+    height: 800px !important;
+    width: 100%;
+  }
+
+  .map-box div.gm-style-iw-a:first-child {
+    width: 200px !important;
+    height: 200px !important;
+  }
+
+  .map-box div.gm-style-iw-c {
+    width: 200px !important;
+    height: 200px !important;
+  }
+
+  .map-box div.gm-style-iw-d {
+    width: 200px !important;
+    height: 200px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+
+    div {
+      width: 200px !important;
+      height: 200px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+    }
+  }
+
+  .map-box .gm-style-iw-t::after {
+    display: none !important;
+  }
+
+  .description {
+    h4 {
+      font-family: 'CaviarDreams';
+      color: white;
+    }
+  }
+}
+
+.team {
+  h1 {
+    font-family: 'Supersonic Rocketship';
+    color: #F8C7DC;
+  }
+
+  .swiper-scrollbar {
+    background: #FFFFFF;
+    height: 1px;
+
+    .swiper-scrollbar-drag {
+      height: 5px;
+      background: #FF0267;
+      border-radius: 0px;
+      top: -2px;
+    }
+  }
+
+  .team-member {
+    .image-and-title {
+      display: flex;
+      flex-direction: column;
+
+      .title {
+        align-self: center;
+        margin-top: -1rem;
+        z-index: 999;
+
+        h5 {
+          background-color: #000000;
+          font-family: 'CaviarDreams';
+          font-weight: bold;
+          color: white;
+          text-transform: uppercase;
+          padding: 10px 20px;
+          border-radius: 100px;
+          text-shadow: -1px 3px 2px rgba(242, 182, 18, 1);
+        }
+      }
+
+      .description {
+        visibility: hidden;
+        padding: 2rem;
+        flex: 1;
+        color: white;
+        position: absolute;
+        height: 75%;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+
+        h4 {
+          text-align: center;
+        }
+      }
+    }
+
+    .info {
+      visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      a {
+        padding-right: 0.8rem;
+      }
+
+      .name {
+        font-family: 'CaviarDreams';
+        font-style: italic;
+        color: white;
+        text-transform: uppercase;
+      }
+    }
+
+    &:hover {
+      .image-and-title {
+        img {
+          filter: opacity(0.3);
+        }
+
+        .description {
+          visibility: visible;
+        }
+
+        .title {
+          visibility: visible;
+        }
+      }
+
+      .info {
+        visibility: visible;
+      }
+    }
+
+    @media only screen and (max-width: 600px) {
+      img {
+        filter: none;
+      }
+
+      .image-and-title {
+        .title {
+          visibility: visible;
+        }
+      }
+
+      .info {
+        visibility: visible;
+      }
+    }
+  }
+}
+
+.partners {
+  background-image: url(/assets/partners.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  h1 {
+    font-family: 'Supersonic Rocketship';
+    color: #9361C4;
+  }
+}
+
+.roadmap {
+  h1 {
+    font-family: 'Supersonic Rocketship';
+    color: #F8C7DC;
+  }
+
+  .roadmap-container {
+    height: 100vh;
+  }
+}
+
+.footer {
+  background-image: url(/assets/footer.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  .email {
+    text-decoration: none;
+
+    p {
+      font-family: 'CaviarDreams';
+      font-weight: bold;
+      color: white;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.copyright {
+  border-color: rgba($color: white, $alpha: 0.3);
+  border-top-width: 1px;
+  border-top-style: solid;
+
+  p {
+    font-family: 'CaviarDreams';
+    color: white;
+  }
+}
+
+header {
+  .overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.2s;
+
+    background-image: url('/assets/menu.jpg');
+    background-position: center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .overlay-content {
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .overlay a.menu-item {
+    font-family: 'Supersonic Rocketship';
+    font-size: 2.5rem;
+    padding: 1.5rem;
+  }
+
+  .overlay a.menu-item:hover,
+  .overlay a.menu-item:focus,
+  .overlay a.menu-item.selected {
+    color: #3675D5;
+
+    &.story {
+      color: #F1B612;
+    }
+
+    &.collection {
+      color: #3675D5;
+    }
+
+    &.roadmap {
+      color: #9361C4;
+    }
+
+    &.mob_challenge {
+      color: #D9FF0C;
+    }
+
+    &.team {
+      color: #D53678;
+    }
+  }
+
+  .overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    cursor: pointer;
+    line-height: 10px;
+  }
+
+  @media screen and (max-height: 450px) {
+    .overlay a {
+      font-size: 20px
+    }
+
+    .overlay .closebtn {
+      font-size: 40px;
+      top: 15px;
+      right: 35px;
+    }
+  }
+}
+
+.mob-challenge-button {
+  border: 0;
+  background-color: #9361C4;
+  padding: 5px 5px 5px 20px;
+  border-radius: 100px;
+
+  font-family: 'Supersonic Rocketship';
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+
+  img {
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    border-radius: 100px;
+    margin-left: 20px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .mob-challenge-button {
+    margin: 0 !important;
+  }
+
+  .social-icons {
+    padding: 0 !important;
+    padding-left: 1rem !important;
+  }
+}
+
+
+.video-entrance {
+  .web-button {
+    visibility: visible;
+  }
+
+  .mobile-button {
+    visibility: hidden;
+  }
+
+  @media only screen and (max-width: 600px) {
+    background-image: url('/assets/mobile-entrance.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    video {
+      visibility: hidden;
+    }
+
+    .web-button {
+      visibility: hidden;
+    }
+
+    .mobile-button {
+      visibility: visible;
+    }
+  }
+}
+
+.video-play {
+  position: absolute;
+  border: 0;
+  background: transparent;
+  font-family: 'Supersonic Rocketship';
+  color: white;
+  font-size: 50px;
+  top: 80%;
+  // padding: 75px;
+  // background-image: url(/assets/entrance-button.png);
+  // background-size: cover;
+  // background-position: center center;
+  // background-repeat: no-repeat;
+
+  // @media only screen and (max-width: 600px) {
+  // top: 70%;
+  // padding: 56px;
+  // font-size: 18px;
+  // }
+
+  &:hover {
+    color: #D53678;
+  }
+}
+
+.swiper-button-next {
+  color: white;
+}
+
+.swiper-button-prev {
+  color: white;
+}
+
+
+
+.show-on-hover {
+  display: none;
+}
+
+.show-on-hover:hover {
+  display: block;
+}
+
+.animate_glow {
+  border: 3px solid white;
+  width: 100vw;
+  height: 100vh;
+}
+
+@keyframes blinkAnimation {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+
+  }
+}
+
+@keyframes slideAnimation {
+  0% {
+    transform: translate(0px, 0px);
+  }
+
+  50% {
+    transform: translate(-130px, 150px);
+  }
+
+
+  100% {
+    
+    transform: translate(00px, 00px);
+
+  }
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.5);
+
+  }
+
+  100% {
+    transform: scale(1);
+
+  }
+}
+
+
+
+.blink {
+  animation: 2s ease-in-out 0s infinite blinkAnimation;
+}
+
+.blink:hover {
+
+}
+
+.hand-box {
+  animation-name: slideAnimation;
+  animation-duration: 4s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: 1s;
+}
+
+.hand {
+  transform: rotate(-30deg);
+  
+}
+
+.clickToContinue {
+  animation-name: fadeInAnimation;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: 0s;
+  
+  opacity: 1;
+  color: white;
+  text-shadow: 2px 2px rgb(217, 62, 155);
+  border: 0px solid rgb(120, 113, 113);
+  border-radius: 3px;
+
+  margin-left: 1.5vw;
+  margin-top: 15vh;
+
+  font-size: 2vh;
+
+}
+
+
+@keyframes loader {
+  0% {
+    transform: scale(1);
+
+  }
+
+  50% {
+    transform: scale(1.5);
+
+  }
+
+  100% {
+    transform: scale(1);
+
+  }
+}
+
+.loading {
+  animation-name: loader;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: 0s;
+
+  color: white;
+  text-shadow: 2px 2px rgb(217, 62, 155);
+  font-size: 2vh;
+
+}
+
+.non-selectable {
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
