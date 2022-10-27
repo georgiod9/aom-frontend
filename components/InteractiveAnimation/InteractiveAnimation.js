@@ -4,6 +4,12 @@ import { useState } from "react";
 import Loading from "../Loading";
 
 const InteractiveAnimation = (props) => {
+
+    const [x, setX] = useState();
+    const [y, setY] = useState();
+    const screenWidth = 0;
+    const screenHeight = 0;
+
     const [show, setShow] = useState(true)
     const [enter, setEnter] = props.enterFlag
     const frameRate = props.frameRate;
@@ -18,7 +24,10 @@ const InteractiveAnimation = (props) => {
     const target_margin_left = props.marginLeft;
     const target_margin_top = props.marginTop;
 
-    
+    const srcWidth = props.srcWidth
+    const srcHeight = props.srcHeight
+
+
 
     const loop_anim = props.loop;
 
@@ -35,6 +44,21 @@ const InteractiveAnimation = (props) => {
     const target_width_ratio = getIntFromString(target_width, "v") / 100
     const target_height_ratio = getIntFromString(target_height, "v") / 100
 
+    const clip_width = 662;
+    const clip_height = 712;
+    const offset_x = props.offset[0]
+    const offset_y = props.offset[1]
+    const offset_left = props.offsetLeft
+    const clip_margin_left = offset_x - (clip_width / 2)
+    const clip_margin_top = offset_y - (clip_height / 2)
+
+    let clip_margin_left_vw = (clip_margin_left / screenWidth) * 100;
+    let clip_margin_top_vh = (clip_margin_top / screenHeight) * 100;
+
+
+    const [clip_margin_left_str, setClipMarginLeftStr] = useState("0vw")
+    const [clip_margin_top_str, setClipMarginTopStr] = useState("0vh")
+
 
     const framesList = props.framesList
 
@@ -44,20 +68,59 @@ const InteractiveAnimation = (props) => {
     const [forward, setForward] = useState(true)
 
 
-    const [x, setX] = useState();
-    const [y, setY] = useState();
-    const screenWidth = 0;
-    const screenHeight = 0;
-
     const [hideIndicator, setHideIndicator] = props.hideIndicator;
+
+    const [resizeW, setResizeW] = useState(1)
+    const [resizeH, setResizeH] = useState(1)
+
+    const [ratioW, setRatioW] = useState(1)
+    const [ratioH, setRatioH] = useState(1)
+
+    const [windowWidth, setWindowWidth] = useState(1920)
+    const [windowHeight, setWindowHeight] = useState(1080)
+
 
 
     useEffect(() => {
-        if (window !== undefined) {
-            screenWidth = window.innerWidth;
-            screenHeight = window.innerHeight;
+        function handleWindowResize() {
+            if (window !== undefined) {
+                setWindowHeight(window.innerHeight);
+                setWindowWidth(window.innerWidth);
+                resizeEverything();
+            }
         }
 
+        if (window !== undefined) {
+            setWindowHeight(window.innerHeight);
+            setWindowWidth(window.innerWidth);
+            resizeEverything();
+        }
+
+        window.addEventListener('resize', handleWindowResize)
+
+
+        function resizeEverything() {
+            screenWidth = window.innerWidth;
+            screenHeight = window.innerHeight;
+
+            setWindowWidth(window.innerWidth)
+            setWindowHeight(window.innerHeight)
+
+            setRatioW(windowWidth/1920)
+            setRatioH(windowHeight/1080)
+            setResizeW(((662) * ratioW).toString() + "px")
+            setResizeH(((712) * ratioH ).toString() + "px")
+
+            offset_left = props.offsetLeft * ratioW
+
+            let tx = (clip_width ) * (windowWidth/2019)
+            let ty = (windowHeight - ratioH * clip_height) 
+            setClipMarginLeftStr(tx.toString() + "px")
+            setClipMarginTopStr(ty.toString() + "px")
+        }
+
+       
+        
         const update = (e) => {
             setX(e.x);
             setY(e.y);
@@ -71,9 +134,9 @@ const InteractiveAnimation = (props) => {
             y <= (target_height_ratio + target_margin_top_ratio) * screenHeight
         ) {
             setForward(true)
-  
+
             setHideIndicator(true);
-            
+
         } else {
             setInArea(false)
             if (!loop_anim) {
@@ -91,7 +154,7 @@ const InteractiveAnimation = (props) => {
                         //return <Loading/>
                     }
                     setInArea(true);
-                    
+
                 }
                 else {
                     setCurrentPosition(currentPosition + 1);
@@ -102,7 +165,7 @@ const InteractiveAnimation = (props) => {
                     setInArea(false)
 
                     setCurrentPosition(0);
-                    if(hideOnNotHover && !inArea) {
+                    if (hideOnNotHover && !inArea) {
                         setIsHover(false)
                     }
                 }
@@ -115,6 +178,7 @@ const InteractiveAnimation = (props) => {
         return () => {
             window.removeEventListener('mousemove', update);
             window.removeEventListener('touchmove', update);
+            window.removeEventListener('resize', handleWindowResize);
         }
     })
 
@@ -125,15 +189,22 @@ const InteractiveAnimation = (props) => {
         <div style={{
             "position": "relative",
             "maxWidth": "100vw",
-            "maxHeight": "100vh"
+            "maxHeight": "100vh",
+            "margin": "auto auto"
         }} >
-        
-            <img style={{
-                "margin": "auto auto",
-                "width": "100vw",
-                "height": "100vh",
-                "maxWidth": "100vw",
-            }} src={url} />
+
+            <div style={{
+                "marginLeft": clip_margin_left_str,
+                "marginTop": clip_margin_top_str,
+            }}>
+                <img style={{
+                    "margin": "auto auto",
+                    "width": resizeW,
+                    "height": resizeH,
+                    "maxWidth": "100vw",
+                }} src={url} />
+            </div>
+
             <div style={{
                 "position": "absolute",
                 "top": "0%",
@@ -142,10 +213,9 @@ const InteractiveAnimation = (props) => {
                 "padding": "0px 0px",
                 "height": target_height,
                 "width": target_width,
-                "border": "0px solid white"
-                
+
             }}
-            onClick={handleClick}>
+                onClick={handleClick}>
 
             </div>
         </div>

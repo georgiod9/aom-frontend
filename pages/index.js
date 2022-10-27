@@ -15,6 +15,7 @@ import HoverIndicator from '../components/HoverIndicator'
 import Link from 'next/link'
 import ClickToContinue from '../components/ClickToContinue'
 import VideoController from '../components/VideoController/VideoController'
+import stillGate from '../assets/gate-anim/gate-still.png'
 
 export default function Home() {
   const audioRef = useRef(null)
@@ -46,6 +47,11 @@ export default function Home() {
   const clickToContinue_width = 20;
   const clickToContinue_width_str = clickToContinue_width.toString() + "vw";
 
+  const clip_width = 662;
+  const clip_height = 712;
+  let interactive_clip_margin_top = 0;
+  const interactive_clip_margin_top_str = interactive_clip_margin_top.toString() + "px"
+
 
   const clickToContinue_margin_left = indicator_margin_left + ((indicator_width - 20) / 2)
   const clickToContinue_margin_left_str = clickToContinue_margin_left.toString() + "vw";
@@ -71,7 +77,7 @@ export default function Home() {
 
       let imageId = parseInt(staticFileName);
       obj.id = imageId;
-      links[obj.id - 1] = url;
+      links[obj.id] = url;
 
       fileObj.push(obj);
 
@@ -82,17 +88,37 @@ export default function Home() {
     return links
   }
   //let framesLinks = importAll(require.context("../assets/sequence", false, /\.(png|jpe?g|svg)$/));
-  let framesLinks = importAll(require.context("../assets/gate-sequence", false, /\.(png|jpe?g|svg)$/));
+  ////let framesLinks = importAll(require.context("../assets/gate-sequence", false, /\.(png|jpe?g|svg)$/));
+  let framesLinks = importAll(require.context("../assets/gate-anim/seq", false, /\.(png|jpe?g|svg)$/));
 
+  const [screenWidth, setScreenWidth] = useState(1920)
+  const [screenHeight, setScreenHeight] = useState(1080)
 
 
   useEffect(() => {
+
+    function handleWindowResize() {
+      if (window !== undefined) {
+        setScreenHeight(window.innerHeight)
+        setScreenWidth(window.innerWidth)
+      }
+    }
+    window.addEventListener('resize', handleWindowResize);
+
+    if (window !== undefined) {
+      setScreenWidth(window.innerWidth)
+      setScreenHeight(window.innerHeight)
+      handleWindowResize()
+
+      interactive_clip_margin_top = screenHeight - clip_height;
+    }
+
     if (enter) {
       setTimeout(() => {
         toggleMusicPlayer()
       }, 300)
     }
-  }, [enter])
+  })
 
   const toggleMusicPlayer = () => {
     if (audioPlaying) {
@@ -122,49 +148,79 @@ export default function Home() {
   const gateClose = "https://cdn.discordapp.com/attachments/936378940992393277/1033032450818981898/211022-Main-Gate-Loop-Reverse.mp4"
   const margin_left_str = indicator_margin_left_str
   const margin_top_str = indicator_margin_top_str
+  const [srcWidth, setSrcWidth] = useState("662px")
+  const [srcHeight, setSrcHeight] = useState("712px")
+
+  //Distance of clip origin (center) in px
+  const [offset_center_gate_x, setOffsetCenterGateX] = useState(960)
+  const [offset_center_gate_y, setOffsetCenterGateY] = useState(540)
+
+
 
   if (!enter) {
     return (
-      <>
-        
+      <div style={{
+        "overflow": "hidden",
+        "margin": "auto auto"
+      }}>
+        <div>
 
-        <div style={{
-                "position": "relative"
+          <div style={{
+            "zIndex": "10",
+            "transform": "translate(" + (0.85 * indicator_margin_left).toString() + "vw, " + "20" + "vh)"
+          }}>
+            <HoverIndicator
+              hide={[hideIndicator, setHideIndicator]}
+              margins={[indicator_margin_left_str, indicator_margin_top_str]}
+              dimensions={[(indicator_width), (indicator_height)]} />
+          </div>
+
+          <div style={{
+          }}>
+            <div style={{
+              "position": "absolute",
+              "top": 0
+            }}>
+              <img style={{
+                "width": screenWidth,
+                "height": screenHeight
+              }} src={stillGate.src}></img>
+
+            </div>
+            <div style={{
+
+            }}>
+              <div style={{
               }}>
-      
-                <div style={{
-                  "position": "absolute",
-                  "zIndex": "10",
-                  "transform": "translate(" + (0.85 * indicator_margin_left).toString() + "vw, " + "20" + "vh)"
-                }}>
-                  <HoverIndicator
-                    hide={[hideIndicator, setHideIndicator]}
-                    margins={[indicator_margin_left_str, indicator_margin_top_str]}
-                    dimensions={[(indicator_width), (indicator_height)]} />
-                </div>
-      
-                <div style={{ "position": "absolute" }}>
-      
-                  <InteractiveAnimation
-                    inArea={[inArea, setInArea]}
-                    hideIndicator={[hideIndicator, setHideIndicator]}
-                    hideOnNotHover={false}
-                    isHover={[isHover, setIsHover]}
-                    loop={false}
-                    marginLeft={indicator_margin_left_str}
-                    marginTop={indicator_margin_top_str}
-                    width={indicator_width_str}
-                    height={indicator_height_str}
-                    frameRate={50}
-                    framesList={framesLinks}
-                    enterFlag={[enter, setEnter]} />
-      
-      
-      
-      
-      
-                </div>
+                <InteractiveAnimation
+                  screenWidth={screenWidth}
+                  screenHeight={screenHeight}
+                  inArea={[inArea, setInArea]}
+                  hideIndicator={[hideIndicator, setHideIndicator]}
+                  hideOnNotHover={false}
+                  isHover={[isHover, setIsHover]}
+                  loop={false}
+                  marginLeft={indicator_margin_left_str}
+                  marginTop={indicator_margin_top_str}
+                  srcWidth={srcWidth}
+                  srcHeight={srcHeight}
+                  offset={[offset_center_gate_x, offset_center_gate_y]}
+                  offsetLeft={630}
+                  width={indicator_width_str}
+                  height={indicator_height_str}
+                  frameRate={50}
+                  framesList={framesLinks}
+                  enterFlag={[enter, setEnter]} />
               </div>
+
+            </div>
+
+
+
+
+
+          </div>
+        </div>
 
         <div>
           {!enter && inArea &&
@@ -222,7 +278,7 @@ export default function Home() {
             )}
           </div>
         }
-      </>
+      </div>
     )
   }
 
