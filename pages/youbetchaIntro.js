@@ -86,7 +86,7 @@ const YoubetchaIntro = () => {
 
         return links
     }
-    
+
     let framesLinksDoor = importAll(require.context("../assets/youbetcha/sequence-door/", false, /\.(png|jpe?g|svg)$/));
 
     const [enter, setEnter] = useState(false)
@@ -119,7 +119,7 @@ const YoubetchaIntro = () => {
                         "zIndex": 0,
                     }} className="abs">
                         <div style={{
-                        "transform": "translate(" + (0.25*indicator_margin_left).toString() + "vw, " + "5" + "vh)"
+                            "transform": "translate(" + (0.25 * indicator_margin_left).toString() + "vw, " + "5" + "vh)"
 
                         }}>
                             <HoverIndicator
@@ -142,6 +142,7 @@ const YoubetchaIntro = () => {
                         {!enter &&
                             <div style={{}}>
                                 <InteractiveAnimation
+                                    offset={[0, 0]}
                                     inArea={[inArea, setInArea]}
                                     hideIndicator={[hideIndicator, setHideIndicator]}
                                     loop={false}
@@ -209,23 +210,23 @@ const YoubetchaIntro = () => {
 
                     {
                         !pauseAnimation
-                            &&
-                            <div style={{
-                                "width": "100vw",
-                                "height": "100vh",
-                                "maxWidth": "100vw",
-                                "maxHeight": "100vh",
-                                "border": "1px solid white"
-                            }}>
-                                <img
-                                    style={{
-                                        "width": "100vw",
-                                        "height": "100vh"
-                                    }}
-                                    src={enterPokerLounge.src}>
-                                </img>
-                            </div>
-}
+                        &&
+                        <div style={{
+                            "width": "100vw",
+                            "height": "100vh",
+                            "maxWidth": "100vw",
+                            "maxHeight": "100vh",
+                            "border": "1px solid white"
+                        }}>
+                            <img
+                                style={{
+                                    "width": "100vw",
+                                    "height": "100vh"
+                                }}
+                                src={enterPokerLounge.src}>
+                            </img>
+                        </div>
+                    }
 
 
 
