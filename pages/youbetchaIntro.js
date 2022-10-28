@@ -4,13 +4,14 @@ import { useRouter } from "next/router";
 
 //animation for when laundromat door is completely closed
 //import laundromatLoop from "../assets/youbetcha/laundry-before10fps.gif";
-import laundromatLoop from "../assets/youbetcha/laundry-before/laundry-before-10fps-c.gif";
+//newimport laundromatLoop from "../assets/youbetcha/laundry-before/laundry-before-10fps-c.gif";
+import laundromatLoop from "../assets/laundry-anim/gif-10fps.gif";
 
 import HoverIndicator from "../components/HoverIndicator";
 
 //animation for when laundromat door is completely open
 //import laundromatAfterLoop from "../assets/youbetcha/laundry-loop-after10fps.gif";
-import laundromatAfterLoop from "../assets/youbetcha/laundry-after/laundry-after-10fps-c.gif";
+//import laundromatAfterLoop from "../assets/youbetcha/laundry-after/laundry-after-10fps-c.gif";
 
 import ClickToContinue from "../components/ClickToContinue";
 
@@ -26,13 +27,28 @@ import FramesPlayer from "../components/FramesPlayer/FramesPlayer";
 const YoubetchaIntro = () => {
     const videoRef = useRef(null);
     const router = useRouter();
-    const screenWidth = 0;
-    const screenHeight = 0;
+    const [screenWidth, setScreenWidth] = useState(1920)
+    const [screenHeight, setScreenHeight] = useState(1080)
 
     useEffect(() => {
         if (window !== undefined) {
-            screenWidth = window.innerWidth;
-            screenHeight = window.innerHeight;
+            setScreenWidth(window.innerWidth);
+            setScreenHeight(window.innerHeight);
+        }
+
+        function handleWindowResize() {
+            if (window !== undefined) {
+                setScreenHeight(window.innerHeight)
+                setScreenWidth(window.innerWidth)
+            }
+        }
+        window.addEventListener('resize', handleWindowResize);
+
+        if (window !== undefined) {
+            setScreenWidth(window.innerWidth)
+            setScreenHeight(window.innerHeight)
+            handleWindowResize()
+
         }
     })
 
@@ -87,7 +103,9 @@ const YoubetchaIntro = () => {
         return links
     }
 
-    let framesLinksDoor = importAll(require.context("../assets/youbetcha/sequence-door/", false, /\.(png|jpe?g|svg)$/));
+    //newlet framesLinksDoor = importAll(require.context("../assets/youbetcha/sequence-door/", false, /\.(png|jpe?g|svg)$/));
+    let framesLinksDoor = importAll(require.context("../assets/laundry-anim/seq", false, /\.(png|jpe?g|svg)$/));
+
 
     const [enter, setEnter] = useState(false)
     const [enterDoor, setEnterDoor] = useState(false)
@@ -114,20 +132,22 @@ const YoubetchaIntro = () => {
                     style={{
                         "display": enterApp ? "none" : "block",
                     }} >
+
+                    <div style={{
+                        "transform": "translate(" + (0.25 * indicator_margin_left).toString() + "vw, " + "5" + "vh)",
+                    }}>
+                        <HoverIndicator
+                            hide={[hideIndicator, setHideIndicator]}
+                            margins={[indicator_margin_left_str, indicator_margin_top_str]}
+                            dimensions={[indicator_width, indicator_height]} />
+
+                    </div>
+
                     <div style={{
                         "position": "absolute",
-                        "zIndex": 0,
+                        "zIndex": -10,
                     }} className="abs">
-                        <div style={{
-                            "transform": "translate(" + (0.25 * indicator_margin_left).toString() + "vw, " + "5" + "vh)"
 
-                        }}>
-                            <HoverIndicator
-                                hide={[hideIndicator, setHideIndicator]}
-                                margins={[indicator_margin_left_str, indicator_margin_top_str]}
-                                dimensions={[indicator_width, indicator_height]} />
-
-                        </div>
                         <img style={{
                             "width": "100vw",
                             "height": "100vh"
@@ -136,12 +156,20 @@ const YoubetchaIntro = () => {
 
 
                     <div onClick={handleEnterApp} style={{
-                        "display": isHover ? "block" : "none",
-                        "position": "absolute"
+                        "display": isHover ? "block" : "block",
+                        "position": "absolute",
+                        "zIndex": -1
                     }}>
                         {!enter &&
                             <div style={{}}>
                                 <InteractiveAnimation
+                                    offsetLeft={0}
+                                    clipDistanceTop={317}
+                                    clipDistanceLeft={839}
+                                    clipWidth={252}
+                                    clipHeight={475}
+                                    screenWidth={screenWidth}
+                                    screenHeight={screenHeight}
                                     offset={[0, 0]}
                                     inArea={[inArea, setInArea]}
                                     hideIndicator={[hideIndicator, setHideIndicator]}
@@ -160,39 +188,7 @@ const YoubetchaIntro = () => {
 
                     </div>
 
-                    {!enter && inArea &&
 
-                        <div>
-                            <div style={{
-                                "position": "absolute",
-                                "zIndex": 11,
-                                "display": inArea ? "block" : "none"
-                            }}>
-                                <img style={{
-                                    "width": "100vw",
-                                    "height": "100vh",
-                                }} src={laundromatAfterLoop.src}></img>
-
-                            </div>
-
-                            <div
-                                onClick={handleEnterApp}
-                                className="non-selectable"
-                                style={{
-                                    "position": "absolute",
-                                    "width": indicator_width_str,
-                                    "height": "max-content",
-                                    "top": "25vh",
-                                    "textAlign": "center",
-                                    "left": indicator_margin_left_str,
-                                    "zIndex": 200,
-                                }}>
-                                <ClickToContinue />
-                            </div>
-
-                        </div>
-
-                    }
                 </div>
             }
 
@@ -227,14 +223,8 @@ const YoubetchaIntro = () => {
                             </img>
                         </div>
                     }
-
-
-
                 </div>
             }
-
-
-
         </div>
     )
 }

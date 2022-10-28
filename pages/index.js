@@ -118,7 +118,7 @@ export default function Home() {
         toggleMusicPlayer()
       }, 300)
     }
-  })
+  }, [enter])
 
   const toggleMusicPlayer = () => {
     if (audioPlaying) {
@@ -163,11 +163,13 @@ export default function Home() {
         "overflow": "hidden",
         "margin": "auto auto"
       }}>
-        <div>
+        
 
+        <div>
           <div style={{
-            "zIndex": "10",
-            "transform": "translate(" + (0.85 * indicator_margin_left).toString() + "vw, " + "20" + "vh)"
+            "zIndex": 100,
+            "position": "absolute",
+            "transform": "translate(" + (0.6 * indicator_margin_left).toString() + "vw, " + "40" + "vh)"
           }}>
             <HoverIndicator
               hide={[hideIndicator, setHideIndicator]}
@@ -175,10 +177,12 @@ export default function Home() {
               dimensions={[(indicator_width), (indicator_height)]} />
           </div>
 
+
           <div style={{
           }}>
             <div style={{
               "position": "absolute",
+              "zIndex": -10,
               "top": 0
             }}>
               <img style={{
@@ -188,11 +192,16 @@ export default function Home() {
 
             </div>
             <div style={{
-
+              "position": "absolute",
+              "zIndex": -1
             }}>
               <div style={{
               }}>
                 <InteractiveAnimation
+                  clipDistanceTop={364}
+                  clipDistanceLeft={631}
+                  clipWidth={662}
+                  clipHeight={712}
                   screenWidth={screenWidth}
                   screenHeight={screenHeight}
                   inArea={[inArea, setInArea]}
@@ -214,10 +223,6 @@ export default function Home() {
               </div>
 
             </div>
-
-
-
-
 
           </div>
         </div>

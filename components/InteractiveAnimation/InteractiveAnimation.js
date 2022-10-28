@@ -79,6 +79,14 @@ const InteractiveAnimation = (props) => {
     const [windowWidth, setWindowWidth] = useState(1920)
     const [windowHeight, setWindowHeight] = useState(1080)
 
+    const original_clip_width = props.clipWidth;
+    const original_clip_height = props.clipHeight;
+
+    const clip_distance_left = props.clipDistanceLeft;
+    const clip_distance_top = props.clipDistanceTop;
+
+
+
 
 
     useEffect(() => {
@@ -108,13 +116,15 @@ const InteractiveAnimation = (props) => {
 
             setRatioW(windowWidth/1920)
             setRatioH(windowHeight/1080)
-            setResizeW(((662) * ratioW).toString() + "px")
-            setResizeH(((712) * ratioH ).toString() + "px")
+            setResizeW(((original_clip_width) * ratioW).toString() + "px")
+            setResizeH(((original_clip_height) * ratioH ).toString() + "px")
 
             offset_left = props.offsetLeft * ratioW
 
-            let tx = (clip_width ) * (windowWidth/2019)
-            let ty = (windowHeight - ratioH * clip_height) 
+            let tx = (clip_distance_left ) * (windowWidth/1920)
+            
+            let ty = (clip_distance_top)  * (windowHeight/1080)
+            console.log("TEST ((", tx, clip_width, windowWidth)
             setClipMarginLeftStr(tx.toString() + "px")
             setClipMarginTopStr(ty.toString() + "px")
         }
@@ -190,7 +200,8 @@ const InteractiveAnimation = (props) => {
             "position": "relative",
             "maxWidth": "100vw",
             "maxHeight": "100vh",
-            "margin": "auto auto"
+            "margin": "auto auto",
+            "zIndex": 1000
         }} >
 
             <div style={{
